@@ -1,0 +1,29 @@
+{
+  "name": "leisure-center-api",
+  "version": "1.0.0",
+  "description": "leisure center management API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint",
+    "start": "nodemon index.js",
+    "test": "npm run tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopkol/leisure-center-API.git"
+  },
+  "author": "lopkol",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/lopkol/leisure-center-API/issues"
+  },
+  "homepage": "https://github.com/lopkol/leisure-center-API#readme",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-plugin-jasmine": "^4.1.2",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
