@@ -7,10 +7,12 @@
     "connect-dev-db": "docker exec -it leisure-center-db psql -U postgres",
     "docker": "docker-compose up -d && npm run wait-until-db-is-up",
     "init-db": "knex migrate:latest && knex seed:run",
-    "lint": "eslint",
+    "lint": "cross-env NODE_ENV=test eslint 'api/**/*.js' 'scripts/**/*.js' 'database/**/*.js'",
+    "migrate-test": "cross-env NODE_ENV=test knex migrate:latest",
     "start": "npm run docker && npm run init-db && nodemon ./api/index.js",
     "stop": "docker-compose down",
-    "test": "npm run tests",
+    "test": "npm run migrate-test && npm run lint && npm run tests",
+    "tests": "cross-env NODE_ENV=test jasmine --config=test-helpers/jasmine.json",
     "wait-until-db-is-up": "await-resource --pg leisure-center-db"
   },
   "repository": {
@@ -28,7 +30,9 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.19.0",
     "eslint-plugin-jasmine": "^4.1.2",
-    "nodemon": "^2.0.7"
+    "jasmine": "^3.6.4",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   },
   "dependencies": {
     "dotenv-haphap": "^3.1.0",
