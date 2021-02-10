@@ -1,8 +1,9 @@
 'use strict';
 
 const express = require('express');
+const { port } = require('./config');
+
 const app = express();
-const port = 2626;
 
 app.get('/', (req, res) => {
   res.send('hello world');
