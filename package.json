@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "docker": "docker-compose up -d && npm run wait-until-db-is-up",
+    "init-db": "knex migrate:latest",
     "lint": "eslint",
-    "start": "npm run docker && nodemon ./api/index.js",
+    "start": "npm run docker && npm run init-db && nodemon ./api/index.js",
     "stop": "docker-compose down",
     "test": "npm run tests",
     "wait-until-db-is-up": "await-resource --pg leisure-center-db"
