@@ -1,5 +1,5 @@
 {
-  "spec_dir": "api",
+  "spec_dir": "app",
   "spec_files": ["**/*.spec.js"],
   "random": false,
   "stopSpecOnExpectationFailure": false

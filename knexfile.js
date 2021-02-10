@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const config = require('./api/config');
+const config = require('./config/config');
 
 module.exports = {
   client: 'pg',

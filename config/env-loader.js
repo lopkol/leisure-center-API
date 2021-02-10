@@ -1,7 +1,7 @@
 'use strict';
 
 const environment = process.env.NODE_ENV || 'dev';
-require('dotenv-haphap').config(`environment/${environment}.env`, 'environment/confidential.env');
+require('dotenv-haphap').config(`config/environment/${environment}.env`, 'config/environment/confidential.env');
 
 const dockerToolboxDefaultIp = '192.168.99.100';
 const dbUrl = process.env.DATABASE_URL;

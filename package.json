@@ -7,12 +7,12 @@
     "connect-dev-db": "docker exec -it leisure-center-db psql -U postgres",
     "docker": "docker-compose up -d && npm run wait-until-db-is-up",
     "init-db": "knex migrate:latest && knex seed:run",
-    "lint": "cross-env NODE_ENV=test eslint 'api/**/*.js' 'scripts/**/*.js' 'database/**/*.js'",
+    "lint": "cross-env NODE_ENV=test eslint 'app/**/*.js' 'scripts/**/*.js' 'database/**/*.js' 'config/**/*.js' 'test/**/*.js'",
     "migrate-test": "cross-env NODE_ENV=test knex migrate:latest",
-    "start": "npm run docker && npm run init-db && nodemon ./api/index.js",
+    "start": "npm run docker && npm run init-db && nodemon ./app/index.js",
     "stop": "docker-compose down",
     "test": "npm run migrate-test && npm run lint && npm run tests",
-    "tests": "cross-env NODE_ENV=test jasmine --config=test-helpers/jasmine.json",
+    "tests": "cross-env NODE_ENV=test jasmine --config=test/jasmine.json",
     "wait-until-db-is-up": "await-resource --pg leisure-center-db"
   },
   "repository": {

@@ -1,2 +1,2 @@
 node_modules
-environment/confidential.env
+config/environment/confidential.env
