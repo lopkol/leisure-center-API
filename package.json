@@ -4,8 +4,9 @@
   "description": "leisure center management API",
   "main": "index.js",
   "scripts": {
+    "connect-dev-db": "docker exec -it leisure-center-db psql -U postgres",
     "docker": "docker-compose up -d && npm run wait-until-db-is-up",
-    "init-db": "knex migrate:latest",
+    "init-db": "knex migrate:latest && knex seed:run",
     "lint": "eslint",
     "start": "npm run docker && npm run init-db && nodemon ./api/index.js",
     "stop": "docker-compose down",
@@ -24,6 +25,7 @@
   "homepage": "https://github.com/lopkol/leisure-center-API#readme",
   "devDependencies": {
     "await-resource": "^0.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.19.0",
     "eslint-plugin-jasmine": "^4.1.2",
     "nodemon": "^2.0.7"
