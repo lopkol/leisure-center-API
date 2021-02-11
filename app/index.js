@@ -4,5 +4,5 @@ const app = require('./app');
 const { port } = require('../config/config');
 
 app.listen(port, () => {
-  console.log(`Express backend running on localhost: ${port}`);
+  console.log('Server started');
 });

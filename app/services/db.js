@@ -5,5 +5,5 @@ const config = require('../../config/config');
 
 module.exports = knex({
   client: 'pg',
-  connection: config.db.connectionString,
+  connection: config.dbConnectionString,
 });
