@@ -72,6 +72,13 @@ describe('Leisure center db services', () => {
   });
 
   describe('updateLeisureCenter', () => {
+    it('retuns null if the leisure center does not exist', async () => {
+      const id = 6;
+      const result = await updateLeisureCenter(id, { name: 'nice new name', address: 'some new address' });
+
+      expect(result).toBe(null);
+    });
+
     it('does not modify other leisure centers', async () => {
       const leisureCenterData = generateLeisureCenter();
       const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());
@@ -113,6 +120,13 @@ describe('Leisure center db services', () => {
   });
 
   describe('deleteLeisureCenter', () => {
+    it('retuns null if the leisure center does not exist', async () => {
+      const id = 6;
+      const result = await deleteLeisureCenter(id);
+
+      expect(result).toBe(null);
+    });
+
     it('does not modify other leisure centers', async () => {
       const leisureCenterData = generateLeisureCenter();
       const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());

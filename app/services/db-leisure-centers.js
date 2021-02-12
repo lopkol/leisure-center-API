@@ -8,6 +8,7 @@ async function createLeisureCenter({ name, description, address, link, activity 
   const [savedLeisureCenter] = await db('leisure_centers')
     .insert(propertiesToSave)
     .returning('*');
+    
   return savedLeisureCenter;
 } 
 
@@ -20,8 +21,7 @@ async function getLeisureCenterById(id) { //for tests
     return null;
   }
 
-  const leisureCenter = result[0];
-  return leisureCenter;
+  return result[0];
 }
 
 async function getAllLeisureCenters() { //for tests
@@ -32,15 +32,27 @@ async function getAllLeisureCenters() { //for tests
 
 async function updateLeisureCenter(id, { name, description, address, link, activity } = {}) {
   const propertiesToUpdate = rundef({ name, description, address, link, activity }, false, false);
-  await db('leisure_centers')
+  const result = await db('leisure_centers')
     .where({ id })
-    .update(propertiesToUpdate);
+    .update(propertiesToUpdate)
+    .returning('*');
+
+  if (result.length === 0) {
+    return null;
+  }
+  return result[0];
 }
 
 async function deleteLeisureCenter(id) {
-  await db('leisure_centers')
+  const result = await db('leisure_centers')
     .where({ id })
+    .returning('*')
     .del();
+
+  if (result.length === 0) {
+    return null;
+  }
+  return result[0];
 }
 
 async function getActivities() {
