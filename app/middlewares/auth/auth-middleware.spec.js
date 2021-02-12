@@ -30,8 +30,8 @@ describe('auth middleware', () => {
     await callEndpointWithAuthMiddleware({ authorizationHeader: 'some invalid header', expectedStatus: 401 });
   });
 
-  it('responds with 401 if called with invalid api key', async () => {
-    const { response } = await callEndpointWithAuthMiddleware({ authorizationHeader: 'Bearer some_invalid_api_key', expectedStatus: 401 });
+  it('responds with 403 if called with invalid api key', async () => {
+    const { response } = await callEndpointWithAuthMiddleware({ authorizationHeader: 'Bearer some_invalid_api_key', expectedStatus: 403 });
     expect(response.body.reason).toEqual('invalid_api_key');
   });
 

@@ -57,6 +57,7 @@ async function deleteLeisureCenter(id) {
 
 async function getActivities() {
   const result = await db('leisure_centers')
+    .select('activity')
     .distinct('activity');
   
   const activities = result.map(leisureCenter => leisureCenter.activity);
