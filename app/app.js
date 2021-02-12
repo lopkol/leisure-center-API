@@ -3,7 +3,7 @@
 const express = require('express');
 
 const router = require('./router');
-//const errorHandlerMiddleware = require('./middlewares/error-handler');
+//const errorHandlerMiddleware = require('./middlewares/error-handler/error-handler');
 
 const app = express();
 
