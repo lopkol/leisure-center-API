@@ -1,19 +1,27 @@
 'use strict';
 
 const request = require('supertest');
+const nock = require('nock');
 const { omit } = require('lodash');
 const app = require('../../../app');
 const db = require('../../../services/db/db');
 
+const { mapbox, apiKeys } = require('../../../../config/config');
+const { generateLeisureCenter, mapboxTestCoordinates, mapboxMockResponse } = require('../../../../test/test-helpers');
 const { getAllLeisureCenters } = require('../../../services/db/db-leisure-centers');
-const { generateLeisureCenter } = require('../../../../test/test-helpers');
-const { apiKeys } = require('../../../../config/config');
+
 const validApiKey = apiKeys[0];
 const authorizationHeader = `Bearer ${validApiKey}`;
+
+const address = 'Budapest';
+const reqParam = `${address}.json`;
 
 describe('POST /leisure-centers', () => {
   beforeEach(async () => {
     await db('leisure_centers').truncate();
+    nock(mapbox.apiUrl)
+      .get(`/${reqParam}?${mapbox.queryStr}`)
+      .reply(200, mapboxMockResponse);
   });
 
   it('responds with 401 if called without valid api key', async () => {
@@ -35,8 +43,23 @@ describe('POST /leisure-centers', () => {
       .expect(400);
   });
 
-  it('creates a leisure center with the correct properties', async () => {
-    const leisureCenter = generateLeisureCenter();
+  it('responds with 400 if some data is missing', async () => {
+    const res = await request(app.listen())
+      .post('/leisure-centers')
+      .set('authorization', authorizationHeader)
+      .send({ 
+        leisureCenter: {
+          name: 'unicorn',
+          address
+        }
+      })
+      .expect(400);
+
+    expect(res.body.reason).toEqual('missing_data');
+  });
+
+  it('creates a leisure center with the correct properties, adds coordinates', async () => {
+    const leisureCenter = generateLeisureCenter({ address });
 
     await request(app.listen())
       .post('/leisure-centers')
@@ -48,11 +71,16 @@ describe('POST /leisure-centers', () => {
     expect(result.length).toBe(1);
 
     const savedLeisureCenter = omit(result[0], 'id');
-    expect(savedLeisureCenter).toEqual(leisureCenter);
+    const leisureCenterWithCoordinates = {
+      ...leisureCenter,
+      coordinates: mapboxTestCoordinates
+    };
+
+    expect(savedLeisureCenter).toEqual(leisureCenterWithCoordinates);
   });
 
-  it('returns 201 and the leisure center data, including id', async () => {
-    const leisureCenter = generateLeisureCenter();
+  it('returns 201 and the leisure center data, including id and coordinates', async () => {
+    const leisureCenter = generateLeisureCenter({ address });
 
     const res = await request(app.listen())
       .post('/leisure-centers')
@@ -64,6 +92,11 @@ describe('POST /leisure-centers', () => {
     expect(returnedData.hasOwnProperty('id')).toBe(true);
 
     const savedLeisureCenterData = omit(returnedData, 'id');
-    expect(savedLeisureCenterData).toEqual(leisureCenter);
+    const leisureCenterWithCoordinates = {
+      ...leisureCenter,
+      coordinates: mapboxTestCoordinates
+    };
+
+    expect(savedLeisureCenterData).toEqual(leisureCenterWithCoordinates);
   });
 });

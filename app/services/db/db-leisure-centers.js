@@ -3,8 +3,8 @@
 const db = require('./db');
 const rundef = require('rundef');
 
-async function createLeisureCenter({ name, description, address, link, activity }) {
-  const propertiesToSave = rundef({ name, description, address, link, activity }, false, false);
+async function createLeisureCenter({ name, description, address, link, activity, coordinates }) {
+  const propertiesToSave = rundef({ name, description, address, link, activity, coordinates }, false, false);
   const [savedLeisureCenter] = await db('leisure_centers')
     .insert(propertiesToSave)
     .returning('*');
@@ -30,8 +30,8 @@ async function getAllLeisureCenters() { //for tests
   return result;
 }
 
-async function updateLeisureCenter(id, { name, description, address, link, activity } = {}) {
-  const propertiesToUpdate = rundef({ name, description, address, link, activity }, false, false);
+async function updateLeisureCenter(id, { name, description, address, link, activity, coordinates } = {}) {
+  const propertiesToUpdate = rundef({ name, description, address, link, activity, coordinates }, false, false);
   const result = await db('leisure_centers')
     .where({ id })
     .update(propertiesToUpdate)

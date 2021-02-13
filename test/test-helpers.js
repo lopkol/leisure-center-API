@@ -36,6 +36,18 @@ function generateLeisureCenter(properties) {
   };
 }
 
+function generateLeisureCenterWithCoordinates(properties) {
+  const leisureCenter = generateLeisureCenter(properties);
+  const coordinates = {
+    longitude: randomIntBetween(-180, 180),
+    latitude: randomIntBetween(-90, 90)
+  };
+  return {
+    ...leisureCenter,
+    coordinates
+  };
+}
+
 const mapboxTestAddress = '825 Milwaukee Ave, Deerfield, Illinois 60015, United States';
 const mapboxTestCoordinates = {
   longitude: -87.921434,
@@ -114,6 +126,7 @@ const mapboxMockResponse = {
 
 module.exports = {
   generateLeisureCenter,
+  generateLeisureCenterWithCoordinates,
   randomItemFrom,
   sortByKey,
   mapboxTestAddress,

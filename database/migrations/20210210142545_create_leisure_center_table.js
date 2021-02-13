@@ -9,6 +9,7 @@ exports.up = function(knex) {
       table.text('address');
       table.text('link');
       table.string('activity');
+      table.json('coordinates');
     });
 };
 

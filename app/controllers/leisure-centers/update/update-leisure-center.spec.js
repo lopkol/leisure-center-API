@@ -1,18 +1,26 @@
 'use strict';
 
 const request = require('supertest');
+const nock = require('nock');
 const app = require('../../../app');
 const db = require('../../../services/db/db');
 
 const { createLeisureCenter } = require('../../../services/db/db-leisure-centers');
-const { generateLeisureCenter } = require('../../../../test/test-helpers');
-const { apiKeys } = require('../../../../config/config');
+const { generateLeisureCenterWithCoordinates, mapboxTestCoordinates, mapboxMockResponse } = require('../../../../test/test-helpers');
+const { mapbox, apiKeys } = require('../../../../config/config');
+
 const validApiKey = apiKeys[0];
 const authorizationHeader = `Bearer ${validApiKey}`;
+
+const address = 'Budapest';
+const reqParam = `${address}.json`;
 
 describe('PATCH /leisure-centers/:id', () => {
   beforeEach(async () => {
     await db('leisure_centers').truncate();
+    nock(mapbox.apiUrl)
+      .get(`/${reqParam}?${mapbox.queryStr}`)
+      .reply(200, mapboxMockResponse);
   });
 
   it('responds with 401 if called without valid api key', async () => {
@@ -47,10 +55,10 @@ describe('PATCH /leisure-centers/:id', () => {
   });
 
   it('returns 200 and the correctly updated leisure center data', async () => {
-    const leisureCenter = generateLeisureCenter();
+    const leisureCenter = generateLeisureCenterWithCoordinates();
     const { id } = await createLeisureCenter(leisureCenter);
 
-    const dataToUpdate = { address: 'new address' };
+    const dataToUpdate = { description: 'very awesome', link: 'some new link' };
 
     const res = await request(app.listen())
       .patch(`/leisure-centers/${id}`)
@@ -63,6 +71,28 @@ describe('PATCH /leisure-centers/:id', () => {
       id,
       ...leisureCenter,
       ...dataToUpdate
+    };
+    expect(returnedData).toEqual(expectedData);
+  });
+
+  it('updates the coordinates if the address changes', async () => {
+    const leisureCenter = generateLeisureCenterWithCoordinates();
+    const { id } = await createLeisureCenter(leisureCenter);
+
+    const dataToUpdate = { address };
+
+    const res = await request(app.listen())
+      .patch(`/leisure-centers/${id}`)
+      .set('authorization', authorizationHeader)
+      .send({ leisureCenter: dataToUpdate })
+      .expect(200);
+    
+    const returnedData = res.body.leisureCenter;
+    const expectedData = {
+      id,
+      ...leisureCenter,
+      ...dataToUpdate,
+      coordinates: mapboxTestCoordinates
     };
     expect(returnedData).toEqual(expectedData);
   });

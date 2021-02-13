@@ -11,7 +11,7 @@ const {
   getActivities,
   getPaginatedLeisureCentersByActivity
 } = require('./db-leisure-centers');
-const { generateLeisureCenter, randomItemFrom, sortByKey } = require('../../../test/test-helpers');
+const { generateLeisureCenterWithCoordinates, randomItemFrom, sortByKey } = require('../../../test/test-helpers');
 
 
 describe('Leisure center db services', () => {
@@ -21,7 +21,7 @@ describe('Leisure center db services', () => {
 
   describe('createLeisureCenter', () => {
     it('creates a leisure center with the given properties', async () => {
-      const leisureCenterData = generateLeisureCenter();
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
       const { id } = await createLeisureCenter(leisureCenterData);
 
       const savedLeisureCenter = await getLeisureCenterById(id);
@@ -40,8 +40,8 @@ describe('Leisure center db services', () => {
     });
 
     it('returns the correct leisure center if present', async () => {
-      const leisureCenterData = generateLeisureCenter();
-      const otherLeisureCenterData = generateLeisureCenter();
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
+      const otherLeisureCenterData = generateLeisureCenterWithCoordinates();
 
       const { id } = await createLeisureCenter(leisureCenterData);
       await createLeisureCenter(otherLeisureCenterData);
@@ -58,7 +58,7 @@ describe('Leisure center db services', () => {
 
   describe('getAllLeisureCenters', () => {
     it('returns all leisure centers', async () => {
-      const leisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());
+      const leisureCentersData = Array(5).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -80,8 +80,8 @@ describe('Leisure center db services', () => {
     });
 
     it('does not modify other leisure centers', async () => {
-      const leisureCenterData = generateLeisureCenter();
-      const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
+      const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       const { id } = await createLeisureCenter(leisureCenterData);
       await Promise.all(otherLeisureCentersData.map(async data => {
@@ -99,7 +99,7 @@ describe('Leisure center db services', () => {
     });
 
     it('updates the properties correctly, does not modify other properties', async () => {
-      const leisureCenterData = generateLeisureCenter();
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
 
       const { id } = await createLeisureCenter(leisureCenterData);
 
@@ -128,8 +128,8 @@ describe('Leisure center db services', () => {
     });
 
     it('does not modify other leisure centers', async () => {
-      const leisureCenterData = generateLeisureCenter();
-      const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
+      const otherLeisureCentersData = Array(5).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       const { id } = await createLeisureCenter(leisureCenterData);
       await Promise.all(otherLeisureCentersData.map(async data => {
@@ -145,7 +145,7 @@ describe('Leisure center db services', () => {
     });
 
     it('deletes the correct leisure center', async () => {
-      const leisureCenterData = generateLeisureCenter();
+      const leisureCenterData = generateLeisureCenterWithCoordinates();
 
       const { id } = await createLeisureCenter(leisureCenterData);
       await deleteLeisureCenter(id);
@@ -159,7 +159,7 @@ describe('Leisure center db services', () => {
   describe('getActivities', () => {
     it('returns all activities that are present', async () => {
       const activityList = ['hiking', 'climbing', 'canoeing', 'via ferrata', 'wakeboarding', 'kitesurfing'];
-      const leisureCentersData = activityList.map(activity => generateLeisureCenter({ activity }));
+      const leisureCentersData = activityList.map(activity => generateLeisureCenterWithCoordinates({ activity }));
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -175,7 +175,7 @@ describe('Leisure center db services', () => {
       const activitesPerLeisureCenter = activityList.concat(Array(4)
         .fill(null)
         .map(() => randomItemFrom(activityList)));
-      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenter({ activity }));
+      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenterWithCoordinates({ activity }));
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -192,7 +192,7 @@ describe('Leisure center db services', () => {
       const activityList = ['hiking', 'climbing', 'canoeing'];
       const activitesPerLeisureCenter = Array(6).fill(null)
         .map(() => randomItemFrom(activityList));
-      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenter({ activity }));
+      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenterWithCoordinates({ activity }));
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -204,7 +204,7 @@ describe('Leisure center db services', () => {
     });
 
     it('does not filter activities if called without activity prop', async () => {
-      const leisureCentersData = Array(5).fill(null).map(() => generateLeisureCenter());
+      const leisureCentersData = Array(5).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -221,7 +221,7 @@ describe('Leisure center db services', () => {
       const activitesPerLeisureCenter = activityList.concat(Array(4)
         .fill(null)
         .map(() => randomItemFrom(activityList)));
-      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenter({ activity }));
+      const leisureCentersData = activitesPerLeisureCenter.map(activity => generateLeisureCenterWithCoordinates({ activity }));
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -236,7 +236,7 @@ describe('Leisure center db services', () => {
     });
 
     it('starts at given offset', async () => {
-      const leisureCentersData = Array(8).fill(null).map(() => generateLeisureCenter());
+      const leisureCentersData = Array(8).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
@@ -251,7 +251,7 @@ describe('Leisure center db services', () => {
     });
 
     it('returns at most "limit" number of results if limit is given', async () => {
-      const leisureCentersData = Array(8).fill(null).map(() => generateLeisureCenter());
+      const leisureCentersData = Array(8).fill(null).map(() => generateLeisureCenterWithCoordinates());
 
       await Promise.all(leisureCentersData.map(async data => {
         await createLeisureCenter(data);
