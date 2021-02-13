@@ -5,9 +5,10 @@ const nock = require('nock');
 const app = require('../../../app');
 const db = require('../../../services/db/db');
 
-const { createLeisureCenter } = require('../../../services/db/db-leisure-centers');
-const { generateLeisureCenterWithCoordinates, mapboxTestCoordinates, mapboxMockResponse } = require('../../../../test/test-helpers');
 const { mapbox, apiKeys } = require('../../../../config/config');
+const { createLeisureCenter } = require('../../../services/db/db-leisure-centers');
+const { generateLeisureCenterWithCoordinates } = require('../../../../test/test-helpers');
+const { mapboxTestCoordinates, mapboxTestResponse } = require('../../../../test/geocoding-api-test-data');
 
 const validApiKey = apiKeys[0];
 const authorizationHeader = `Bearer ${validApiKey}`;
@@ -20,7 +21,7 @@ describe('PATCH /leisure-centers/:id', () => {
     await db('leisure_centers').truncate();
     nock(mapbox.apiUrl)
       .get(`/${reqParam}?${mapbox.queryStr}`)
-      .reply(200, mapboxMockResponse);
+      .reply(200, mapboxTestResponse);
   });
 
   it('responds with 401 if called without valid api key', async () => {

@@ -5,7 +5,7 @@ const nock = require('nock');
 const querystring = require('querystring');
 const { mapbox } = require('../../../../config/config');
 
-const { mapboxTestAddress, mapboxTestCoordinates, mapboxMockResponse } = require('../../../../test/test-helpers');
+const { mapboxTestAddress, mapboxTestCoordinates, mapboxTestResponse } = require('../../../../test/geocoding-api-test-data');
 
 const reqParam = `${querystring.escape(mapboxTestAddress)}.json`;
 
@@ -26,7 +26,7 @@ describe('geocoding API', () => {
   it('returns an object with correct longitude and latitude', async () => {
     nock(mapbox.apiUrl)
       .get(`/${reqParam}?${mapbox.queryStr}`)
-      .reply(200, mapboxMockResponse);
+      .reply(200, mapboxTestResponse);
 
     const result = await geocode(mapboxTestAddress);
     expect(result).toEqual(mapboxTestCoordinates);
