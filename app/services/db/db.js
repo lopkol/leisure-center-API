@@ -1,7 +1,7 @@
 'use strict';
 
 const knex = require('knex');
-const config = require('../../config/config');
+const config = require('../../../config/config');
 
 module.exports = knex({
   client: 'pg',

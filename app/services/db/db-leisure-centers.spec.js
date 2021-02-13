@@ -11,7 +11,7 @@ const {
   getActivities,
   getPaginatedLeisureCentersByActivity
 } = require('./db-leisure-centers');
-const { generateLeisureCenter, randomItemFrom, sortByKey } = require('../../test/test-helpers');
+const { generateLeisureCenter, randomItemFrom, sortByKey } = require('../../../test/test-helpers');
 
 
 describe('Leisure center db services', () => {

@@ -1,6 +1,6 @@
 'use strict';
 
-const { updateLeisureCenter } = require('../../../services/db-leisure-centers');
+const { updateLeisureCenter } = require('../../../services/db/db-leisure-centers');
 
 module.exports = async (req, res) => {
   const id = req.params.id;
@@ -11,5 +11,5 @@ module.exports = async (req, res) => {
   if (savedLeisureCenter === null) {
     return res.sendStatus(404);
   }
-  res.status(200).send({ leisureCenter: savedLeisureCenter });
+  return res.status(200).send({ leisureCenter: savedLeisureCenter });
 };

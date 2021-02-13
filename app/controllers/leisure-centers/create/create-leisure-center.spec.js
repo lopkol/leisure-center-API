@@ -3,9 +3,9 @@
 const request = require('supertest');
 const { omit } = require('lodash');
 const app = require('../../../app');
-const db = require('../../../services/db');
+const db = require('../../../services/db/db');
 
-const { getAllLeisureCenters } = require('../../../services/db-leisure-centers');
+const { getAllLeisureCenters } = require('../../../services/db/db-leisure-centers');
 const { generateLeisureCenter } = require('../../../../test/test-helpers');
 const { apiKeys } = require('../../../../config/config');
 const validApiKey = apiKeys[0];

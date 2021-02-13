@@ -1,6 +1,6 @@
 'use strict';
 
-const { getActivities } = require('../../services/db-leisure-centers');
+const { getActivities } = require('../../services/db/db-leisure-centers');
 
 module.exports = async (req, res) => {
   const activities = await getActivities();

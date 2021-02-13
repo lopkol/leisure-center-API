@@ -1,6 +1,6 @@
 'use strict';
 
-const { deleteLeisureCenter } = require('../../../services/db-leisure-centers');
+const { deleteLeisureCenter } = require('../../../services/db/db-leisure-centers');
 
 module.exports = async (req, res) => {
   const id = req.params.id;

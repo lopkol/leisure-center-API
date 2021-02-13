@@ -2,9 +2,9 @@
 
 const request = require('supertest');
 const app = require('../../../app');
-const db = require('../../../services/db');
+const db = require('../../../services/db/db');
 
-const { createLeisureCenter, getLeisureCenterById } = require('../../../services/db-leisure-centers');
+const { createLeisureCenter, getLeisureCenterById } = require('../../../services/db/db-leisure-centers');
 
 const { generateLeisureCenter } = require('../../../../test/test-helpers');
 const { apiKeys } = require('../../../../config/config');
