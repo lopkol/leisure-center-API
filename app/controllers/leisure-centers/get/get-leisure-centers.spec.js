@@ -80,7 +80,7 @@ describe('GET /leisure-centers', () => {
       .set('authorization', authorizationHeader)
       .expect(200);
 
-    const receivedData = res.body.leisureCenters.map(leisureCenter => omit(leisureCenter, 'id'));
+    const receivedData = res.body.map(leisureCenter => omit(leisureCenter, 'id'));
 
     const expectedData = leisureCentersData.map(leisureCenter => ({
       ...leisureCenter,
@@ -109,10 +109,10 @@ describe('GET /leisure-centers', () => {
       .set('authorization', authorizationHeader)
       .expect(200);
 
-    expect(res.body.leisureCenters.length).toBe(2);
+    expect(res.body.length).toBe(2);
   });
 
-  it('returns correct string in case of no weather data', async () => {
+  it('returns no weather in case of no weather data', async () => {
     const leisureCenterData = generateLeisureCenter();
     const leisureCenter = {
       ...leisureCenterData,
@@ -126,15 +126,12 @@ describe('GET /leisure-centers', () => {
       .set('authorization', authorizationHeader)
       .expect(200);
 
-    const returnedData = omit(res.body.leisureCenters[0], 'id');
-    const expectedData = {
-      ...leisureCenter,
-      weather: 'no available weather data at given location'
-    };
-    expect(returnedData).toEqual(expectedData);
+    const returnedData = omit(res.body[0], 'id');
+
+    expect(returnedData).toEqual(leisureCenter);
   });
 
-  it('returns correct string in case of no weather data', async () => {
+  it('returns no weather in case of no location data', async () => {
     const leisureCenterData = generateLeisureCenter();
     const leisureCenter = {
       ...leisureCenterData,
@@ -148,11 +145,8 @@ describe('GET /leisure-centers', () => {
       .set('authorization', authorizationHeader)
       .expect(200);
 
-    const returnedData = omit(res.body.leisureCenters[0], 'id');
-    const expectedData = {
-      ...leisureCenter,
-      weather: 'location not recognized'
-    };
-    expect(returnedData).toEqual(expectedData);
+    const returnedData = omit(res.body[0], 'id');
+
+    expect(returnedData).toEqual(leisureCenter);
   });
 });

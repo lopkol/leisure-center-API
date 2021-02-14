@@ -71,7 +71,7 @@ describe('PATCH /leisure-centers/:id', () => {
       .send({ leisureCenter: dataToUpdate })
       .expect(200);
     
-    const returnedData = res.body.leisureCenter;
+    const returnedData = res.body;
     const expectedData = {
       id,
       ...leisureCenter,
@@ -92,7 +92,7 @@ describe('PATCH /leisure-centers/:id', () => {
       .send({ leisureCenter: dataToUpdate })
       .expect(200);
     
-    const returnedData = res.body.leisureCenter;
+    const returnedData = res.body;
     const expectedData = {
       id,
       ...leisureCenter,

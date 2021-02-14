@@ -93,7 +93,7 @@ describe('POST /leisure-centers', () => {
       .send({ leisureCenter })
       .expect(201);
     
-    const returnedData = res.body.leisureCenter;
+    const returnedData = res.body;
     expect(returnedData.hasOwnProperty('id')).toBe(true);
 
     const savedLeisureCenterData = omit(returnedData, 'id');

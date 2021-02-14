@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   }
 
   if (!apiKeys.includes(apiKey)) {
-    return res.status(403).send({ reason: 'invalid_api_key' });
+    return res.status(401).send({ reason: 'invalid_api_key' });
   }
 
   req.apiKey = apiKey;

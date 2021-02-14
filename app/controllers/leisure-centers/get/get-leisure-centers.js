@@ -15,15 +15,8 @@ module.exports = async (req, res) => {
     const weather = await getWeather(leisureCenter.coordinates);
     switch (weather) {
       case null:
-        return {
-          ...leisureCenter,
-          weather: 'no available weather data at given location'
-        };
       case undefined:
-        return {
-          ...leisureCenter,
-          weather: 'location not recognized'
-        };
+        return leisureCenter;
       default:
         return {
           ...leisureCenter,
@@ -36,5 +29,5 @@ module.exports = async (req, res) => {
   // could call geocoding api for those ones where we have no coordinates
   // cache weather, so no need to call weather api so often
 
-  return res.status(200).send({ leisureCenters: leisureCentersWithWeather });
+  return res.status(200).send(leisureCentersWithWeather);
 };

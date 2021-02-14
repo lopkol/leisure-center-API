@@ -20,5 +20,5 @@ module.exports = async (req, res) => {
   };
 
   const savedLeisureCenter = await createLeisureCenter(leisureCenterWithCoordinates);
-  return res.status(201).send({ leisureCenter: savedLeisureCenter });
+  return res.status(201).send(savedLeisureCenter);
 };

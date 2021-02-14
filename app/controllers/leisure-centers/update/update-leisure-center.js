@@ -21,5 +21,5 @@ module.exports = async (req, res) => {
   if (savedLeisureCenter === null) {
     return res.sendStatus(404);
   }
-  return res.status(200).send({ leisureCenter: savedLeisureCenter });
+  return res.status(200).send(savedLeisureCenter);
 };
