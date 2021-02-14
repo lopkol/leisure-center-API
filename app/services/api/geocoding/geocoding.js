@@ -7,7 +7,7 @@ const querystring = require('querystring');
 module.exports = async address => {
   const reqParam = `${querystring.escape(address)}.json`;
 
-  const apiUrl = `${mapbox.apiUrl}/${reqParam}?${mapbox.queryStr}`;
+  const apiUrl = `${mapbox.url}${mapbox.path}/${reqParam}?${mapbox.queryStr}`;
   let longitude, latitude;
   try {
     const res = await axios.get(apiUrl);

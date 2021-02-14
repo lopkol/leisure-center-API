@@ -18,11 +18,13 @@ module.exports = {
   dbConnectionString: process.env.DATABASE_URL,
   environment: process.env.NODE_ENV,
   mapbox: {
-    apiUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places',
+    url: 'https://api.mapbox.com',
+    path: '/geocoding/v5/mapbox.places',
     queryStr: mapboxQueryStr
   },
   openWeather: {
-    apiUrl: 'https://api.openweathermap.org/data/2.5',
+    url: 'https://api.openweathermap.org',
+    path: '/data/2.5/onecall',
     queryParams: openWeatherQueryParams
   },
   port: process.env.PORT,

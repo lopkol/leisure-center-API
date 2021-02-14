@@ -11,8 +11,8 @@ const reqParam = `${querystring.escape(mapboxTestAddress)}.json`;
 
 describe('geocoding API', () => {
   it('returns null for longitude and latitude in case of error', async () => {
-    nock(mapbox.apiUrl)
-      .get(`/${reqParam}?${mapbox.queryStr}`)
+    nock(mapbox.url)
+      .get(`${mapbox.path}/${reqParam}?${mapbox.queryStr}`)
       .reply(404);
 
     const nullCoordinates = {
@@ -24,8 +24,8 @@ describe('geocoding API', () => {
   });
 
   it('returns an object with correct longitude and latitude', async () => {
-    nock(mapbox.apiUrl)
-      .get(`/${reqParam}?${mapbox.queryStr}`)
+    nock(mapbox.url)
+      .get(`${mapbox.path}/${reqParam}?${mapbox.queryStr}`)
       .reply(200, mapboxTestResponse);
 
     const result = await geocode(mapboxTestAddress);

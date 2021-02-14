@@ -19,9 +19,13 @@ const reqParam = `${address}.json`;
 describe('PATCH /leisure-centers/:id', () => {
   beforeEach(async () => {
     await db('leisure_centers').truncate();
-    nock(mapbox.apiUrl)
-      .get(`/${reqParam}?${mapbox.queryStr}`)
+    nock(mapbox.url)
+      .get(`${mapbox.path}/${reqParam}?${mapbox.queryStr}`)
       .reply(200, mapboxTestResponse);
+  });
+
+  afterEach(async () => {
+    nock.cleanAll();
   });
 
   it('responds with 401 if called without valid api key', async () => {

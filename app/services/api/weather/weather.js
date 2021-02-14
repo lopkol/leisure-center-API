@@ -16,7 +16,7 @@ module.exports = async coordinates => {
   }
   const queryParams = querystring.stringify({ lat: latitude, lon: longitude });
 
-  const apiUrl = `${openWeather.apiUrl}/onecall?${queryParams}&${openWeather.queryParams}`;
+  const apiUrl = `${openWeather.url}${openWeather.path}?${queryParams}&${openWeather.queryParams}`;
 
   try {
     const res = await axios.get(apiUrl);

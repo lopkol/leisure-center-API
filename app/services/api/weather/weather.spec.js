@@ -11,7 +11,7 @@ const queryParams = querystring.stringify({
   lat: openWeatherTestCoordinates.latitude, 
   lon: openWeatherTestCoordinates.longitude 
 });
-const query = `/onecall?${queryParams}&${openWeather.queryParams}`;
+const query = `${openWeather.path}?${queryParams}&${openWeather.queryParams}`;
 
 describe('weather API', () => {
   it('returns undefined if latitude or longitude is missing', async () => {
@@ -25,7 +25,7 @@ describe('weather API', () => {
   });
 
   it('returns null in case of no response from API', async () => {
-    nock(openWeather.apiUrl)
+    nock(openWeather.url)
       .get(query)
       .reply(404);
 
@@ -34,7 +34,7 @@ describe('weather API', () => {
   });
 
   it('returns the current weather', async () => {
-    nock(openWeather.apiUrl)
+    nock(openWeather.url)
       .get(query)
       .reply(200, openWeatherTestResponse);
 
