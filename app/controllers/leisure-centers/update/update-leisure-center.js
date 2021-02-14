@@ -5,7 +5,7 @@ const geocode = require('../../../services/api/geocoding/geocoding');
 
 module.exports = async (req, res) => {
   const id = req.params.id;
-  const leisureCenter = req.body.leisureCenter;
+  const leisureCenter = req.body;
 
   let leisureCenterWithCoordinates = leisureCenter;
   if (leisureCenter.hasOwnProperty('address')) {

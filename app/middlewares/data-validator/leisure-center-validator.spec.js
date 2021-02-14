@@ -16,15 +16,14 @@ describe('auth middleware', () => {
   async function callEndpointWithLeisureCenterValidator({ leisureCenter = {}, expectedStatus = 200 }) {
     const response = await request(testApp.listen())
       .get('/test-endpoint')
-      .send({ leisureCenter })
+      .send(leisureCenter)
       .expect(expectedStatus);
 
     return { request: requestObject, response };
   }
 
   it('responds with 400 if called with no data to save', async () => {
-    const { response } = await callEndpointWithLeisureCenterValidator({ expectedStatus: 400 });
-    expect(response.body.reason).toEqual('no_data');
+    await callEndpointWithLeisureCenterValidator({ expectedStatus: 400 });
   });
 
   it('responds with 400 if called with invalid properties', async () => {
@@ -34,8 +33,7 @@ describe('auth middleware', () => {
       description: 'blah',
       age: '34'
     };
-    const { response } = await callEndpointWithLeisureCenterValidator({ leisureCenter, expectedStatus: 400 });
-    expect(response.body.reason).toEqual('invalid_data');
+    await callEndpointWithLeisureCenterValidator({ leisureCenter, expectedStatus: 400 });
   });
 
   it('calls through to endpoint if the data is valid', async () => {

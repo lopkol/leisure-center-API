@@ -5,7 +5,7 @@ const geocode = require('../../../services/api/geocoding/geocoding');
 const properties = ['name', 'description', 'address', 'link', 'activity'];
 
 module.exports = async (req, res) => {
-  const leisureCenter = req.body.leisureCenter;
+  const leisureCenter = req.body;
 
   const propsOfLeisureCenter = Object.keys(leisureCenter);
   const hasMissingProperties = !properties.every(key => propsOfLeisureCenter.includes(key));

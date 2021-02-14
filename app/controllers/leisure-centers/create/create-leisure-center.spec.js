@@ -40,10 +40,8 @@ describe('POST /leisure-centers', () => {
       .post('/leisure-centers')
       .set('authorization', authorizationHeader)
       .send({ 
-        leisureCenter: {
-          name: 'some name',
-          unicorn: 'happy unicorn'
-        }
+        name: 'some name',
+        unicorn: 'happy unicorn'
       })
       .expect(400);
   });
@@ -53,10 +51,8 @@ describe('POST /leisure-centers', () => {
       .post('/leisure-centers')
       .set('authorization', authorizationHeader)
       .send({ 
-        leisureCenter: {
-          name: 'unicorn',
-          address
-        }
+        name: 'unicorn',
+        address
       })
       .expect(400);
 
@@ -69,7 +65,7 @@ describe('POST /leisure-centers', () => {
     await request(app.listen())
       .post('/leisure-centers')
       .set('authorization', authorizationHeader)
-      .send({ leisureCenter })
+      .send(leisureCenter)
       .expect(201);
     
     const result = await getAllLeisureCenters();
@@ -90,7 +86,7 @@ describe('POST /leisure-centers', () => {
     const res = await request(app.listen())
       .post('/leisure-centers')
       .set('authorization', authorizationHeader)
-      .send({ leisureCenter })
+      .send(leisureCenter)
       .expect(201);
     
     const returnedData = res.body;

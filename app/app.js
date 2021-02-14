@@ -1,14 +1,13 @@
 'use strict';
 
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const openApiDocumentation = require('../openApiDocumentation');
 
 const router = require('./router');
-//const errorHandlerMiddleware = require('./middlewares/error-handler/error-handler');
 
 const app = express();
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 app.use('/', router);
-
-//app.use(errorHandlerMiddleware);
 
 module.exports = app;

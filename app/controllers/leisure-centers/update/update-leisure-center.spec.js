@@ -40,11 +40,9 @@ describe('PATCH /leisure-centers/:id', () => {
     await request(app.listen())
       .post('/leisure-centers')
       .set('authorization', authorizationHeader)
-      .send({ 
-        leisureCenter: {
-          name: 'some name',
-          unicorn: 'happy unicorn'
-        }
+      .send({
+        name: 'some name',
+        unicorn: 'happy unicorn'
       })
       .expect(400);
   });
@@ -55,7 +53,7 @@ describe('PATCH /leisure-centers/:id', () => {
     await request(app.listen())
       .patch(`/leisure-centers/${id}`)
       .set('authorization', authorizationHeader)
-      .send({ leisureCenter })
+      .send(leisureCenter)
       .expect(404);
   });
 
@@ -68,7 +66,7 @@ describe('PATCH /leisure-centers/:id', () => {
     const res = await request(app.listen())
       .patch(`/leisure-centers/${id}`)
       .set('authorization', authorizationHeader)
-      .send({ leisureCenter: dataToUpdate })
+      .send(dataToUpdate)
       .expect(200);
     
     const returnedData = res.body;
@@ -89,7 +87,7 @@ describe('PATCH /leisure-centers/:id', () => {
     const res = await request(app.listen())
       .patch(`/leisure-centers/${id}`)
       .set('authorization', authorizationHeader)
-      .send({ leisureCenter: dataToUpdate })
+      .send(dataToUpdate)
       .expect(200);
     
     const returnedData = res.body;
