@@ -5,7 +5,7 @@ const { openWeather } = require('../../../../config/config');
 const querystring = require('querystring');
 
 module.exports = async coordinates => {
-  if (!coordinates.hasOwnProperty('longitude') || !coordinates.hasOwnProperty('latitude')) {
+  if (!coordinates || !coordinates.hasOwnProperty('longitude') || !coordinates.hasOwnProperty('latitude')) {
     return undefined;
   }
 

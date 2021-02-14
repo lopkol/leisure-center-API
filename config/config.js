@@ -10,6 +10,7 @@ const mapboxQueryStr = querystring.stringify({
 
 const openWeatherQueryParams = querystring.stringify({
   exclude: 'minutely,hourly,daily,alerts',
+  units: 'metric',
   appid: process.env.OPENWEATHER_API_KEY
 });
 
