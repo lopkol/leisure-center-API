@@ -38,7 +38,7 @@ describe('GET /acivities', () => {
       .set('authorization', authorizationHeader)
       .expect(200);
 
-    const returnedData = res.body.activities;
+    const returnedData = res.body;
     expect(returnedData).toEqual(jasmine.arrayWithExactContents(activityList));
   });
 });
